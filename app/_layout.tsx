@@ -1,17 +1,24 @@
-import { View, Text } from 'react-native';
-import React from 'react';
-import '../global.css';
-import { nowPlayingAction } from '@/core/actions/movies/now-playing.action';
+import React from "react";
+import "../global.css";
+import { nowPlayingAction } from "@/core/actions/movies/now-playing.action";
+import { Stack } from "expo-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { StatusBar } from "expo-status-bar";
 
 const RootLayout = () => {
+  //nowPlayingAction(); // Prueba para mostrar la respuesta de la API en consola
 
-  //nowPlayingAction();
+  const queryClient = new QueryClient();
 
   return (
-    <View>
-      <Text className='text-3xl text-center'>RootLayout</Text>
-    </View>
-  )
-}
+    <QueryClientProvider client={queryClient}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      />
+    </QueryClientProvider>
+  );
+};
 
-export default RootLayout
+export default RootLayout;
