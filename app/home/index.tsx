@@ -10,10 +10,20 @@ const HomeScreen = () => {
   const safeArea = useSafeAreaInsets();
 
   // Obtener información de la API desde el hook
-  const { nowPlayingQuery, popularMoviesQuery } = useMovies();
+  const {
+    nowPlayingQuery,
+    popularMoviesQuery,
+    topRatedMoviesQuery,
+    upcomingMoviesQuery,
+  } = useMovies();
 
   // Mostrar pantalla de carga
-  if (nowPlayingQuery.isLoading) {
+  if (
+    nowPlayingQuery.isLoading ||
+    popularMoviesQuery.isLoading ||
+    topRatedMoviesQuery.isLoading ||
+    upcomingMoviesQuery.isLoading
+  ) {
     return (
       <View className="flex-1 items-center justify-center bg-white">
         <ActivityIndicator color="purple" size="large" />
@@ -31,11 +41,26 @@ const HomeScreen = () => {
       <MainSlideShow movies={nowPlayingQuery.data ?? []} />
 
       {/* Peliculas populares */}
-      <MoviesHorizontalList movies={popularMoviesQuery.data ?? []} title="Películas Populares" />
+      <MoviesHorizontalList
+        movies={popularMoviesQuery.data ?? []}
+        title="Películas Populares"
+      />
+
+      {/* Peliculas mejor calificadas */}
+      <MoviesHorizontalList
+        movies={topRatedMoviesQuery.data ?? []}
+        title="Películas Mejor Calificadas"
+      />
+
+      {/* Peliculas proximas a estrenarse */}
+      <MoviesHorizontalList
+        movies={upcomingMoviesQuery.data ?? []}
+        title="Proximas Películas"
+      />
 
       {/* Prueba para mostrar el JSON de respuesta */}
       {/* <Text>{JSON.stringify(nowPlayingQuery.data, null, 2)}</Text> */}
-
+      
     </View>
   );
 };
