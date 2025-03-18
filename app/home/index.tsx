@@ -42,20 +42,23 @@ const HomeScreen = () => {
 
       {/* Peliculas populares */}
       <MoviesHorizontalList
-        movies={popularMoviesQuery.data ?? []}
+        movies={popularMoviesQuery.data?.pages.flat() ?? []}
         title="Películas Populares"
+        loadNextPage={popularMoviesQuery.fetchNextPage}
       />
 
       {/* Peliculas mejor calificadas */}
       <MoviesHorizontalList
-        movies={topRatedMoviesQuery.data ?? []}
+        movies={topRatedMoviesQuery.data?.pages.flat() ?? []}
         title="Películas Mejor Calificadas"
+        loadNextPage={topRatedMoviesQuery.fetchNextPage}
       />
 
       {/* Peliculas proximas a estrenarse */}
       <MoviesHorizontalList
-        movies={upcomingMoviesQuery.data ?? []}
+        movies={upcomingMoviesQuery.data?.pages.flat() ?? []}
         title="Proximas Películas"
+        loadNextPage={upcomingMoviesQuery.fetchNextPage}
       />
 
       {/* Prueba para mostrar el JSON de respuesta */}

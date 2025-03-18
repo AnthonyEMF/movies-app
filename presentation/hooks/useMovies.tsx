@@ -2,7 +2,7 @@ import { nowPlayingAction } from "@/core/actions/movies/now-playing.action";
 import { popularMoviesAction } from "@/core/actions/movies/popular.action";
 import { topRatedMoviesAction } from "@/core/actions/movies/top-rated.action";
 import { upcomingMoviesAction } from "@/core/actions/movies/upcoming.action";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const useMovies = () => {
   
@@ -13,25 +13,37 @@ export const useMovies = () => {
     staleTime: 1000 * 60 * 60 * 24, // Se almacenará en caché por 24 horas
   });
 
-  // Retornar peliculas populares
-  const popularMoviesQuery = useQuery({
+  // Retornar peliculas populares con parametros de paginación
+  const popularMoviesQuery = useInfiniteQuery({
+    initialPageParam: 1,
     queryKey: ['movies', 'popular'],
-    queryFn: popularMoviesAction,
-    staleTime: 1000 * 60 * 60 * 24, // Se almacenará en caché por 24 horas
+    queryFn: ({pageParam}) => {
+      return popularMoviesAction({page: pageParam});
+    },
+    staleTime: 1000 * 60 * 60 * 24,
+    getNextPageParam: (lastPage, pages) => pages.length + 1,
   });
 
-  // Retornar mejor calificadas
-  const topRatedMoviesQuery = useQuery({
+  // Retornar peliculas mejor calificadas con parametros de paginación
+  const topRatedMoviesQuery = useInfiniteQuery({
+    initialPageParam: 1,
     queryKey: ['movies', 'top-rated'],
-    queryFn: topRatedMoviesAction,
-    staleTime: 1000 * 60 * 60 * 24, // Se almacenará en caché por 24 horas
+    queryFn: ({pageParam}) => {
+      return topRatedMoviesAction({page: pageParam});
+    },
+    staleTime: 1000 * 60 * 60 * 24,
+    getNextPageParam: (lastPage, pages) => pages.length + 1,
   });
 
-  // Retornar peliculas proximas a estrenar
-  const upcomingMoviesQuery = useQuery({
+  // Retornar peliculas proximas a estrenar con parametros de paginación
+  const upcomingMoviesQuery = useInfiniteQuery({
+    initialPageParam: 1,
     queryKey: ['movies', 'upcoming'],
-    queryFn: upcomingMoviesAction,
-    staleTime: 1000 * 60 * 60 * 24, // Se almacenará en caché por 24 horas
+    queryFn: ({pageParam}) => {
+      return upcomingMoviesAction({page: pageParam});
+    },
+    staleTime: 1000 * 60 * 60 * 24,
+    getNextPageParam: (lastPage, pages) => pages.length + 1,
   });
   
   return {

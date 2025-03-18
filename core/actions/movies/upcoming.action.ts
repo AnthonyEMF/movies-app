@@ -3,11 +3,23 @@ import { Movie } from "@/infrastructure/interfaces/movie.interface";
 import { MovieDBMoviesResponse } from "@/infrastructure/interfaces/moviedb-response";
 import { MovieMapper } from "@/infrastructure/mappers/movie.mapper";
 
-// Llamar endpoint GET de NowPlaying desde la API
-export const upcomingMoviesAction = async () : Promise<Movie[]> => {
+interface Options {
+  page?: number;
+  limit?: number;
+}
+
+export const upcomingMoviesAction = async ({
+  page = 1,
+  limit = 10,
+}: Options): Promise<Movie[]> => {
   try {
     // Con Paste JSON convertimos la respuesta en una interfaz de TypeScript
-    const { data } = await moviesApi.get<MovieDBMoviesResponse>(`/upcoming`);
+    const { data } = await moviesApi.get<MovieDBMoviesResponse>(`/upcoming`, {
+      params: {
+        page,
+        limit,
+      }
+    });
     
     const movies = data.results.map(movieDbMovie => MovieMapper.fromTheMovieDbToMovie(movieDbMovie));
 
