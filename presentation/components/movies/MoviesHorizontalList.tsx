@@ -41,7 +41,7 @@ const MoviesHorizontalList = ({ title, movies, loadNextPage }: Props) => {
         data={movies}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({item}) => (
-          <MoviePoster id={item.id} poster={item.poster} smallPoster className="px-2"/>
+          <MoviePoster id={item.id} poster={item.poster} smallPoster/>
         )} 
         onScroll={onScroll} 
       />
