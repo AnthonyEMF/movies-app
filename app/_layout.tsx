@@ -19,8 +19,8 @@ const RootLayout = () => {
             headerShown: false,
           }}
         />
-        <StatusBar style="dark"/>
       </QueryClientProvider>
+      <StatusBar style="auto"/>
     </GestureHandlerRootView>
   );
 };

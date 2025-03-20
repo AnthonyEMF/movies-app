@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, ScrollView } from "react-native";
 import React from "react";
 import { useMovies } from "@/presentation/hooks/useMovies";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -32,39 +32,41 @@ const HomeScreen = () => {
   }
 
   return (
-    <View className="bg-white flex-1 mt-2" style={{ paddingTop: safeArea.top }}>
+    <ScrollView>
+      <View className="bg-white flex-1 mt-2" style={{ paddingTop: safeArea.top }}>
 
-      {/* Titulo */}
-      <Text className="text-3xl font-bold px-4">Movies App</Text>
+        {/* Titulo */}
+        <Text className="text-3xl font-bold px-4">Movies App</Text>
 
-      {/* Carrusel de imagenes */}
-      <MainSlideShow movies={nowPlayingQuery.data ?? []} />
+        {/* Carrusel de imagenes */}
+        <MainSlideShow movies={nowPlayingQuery.data ?? []} />
 
-      {/* Peliculas populares */}
-      <MoviesHorizontalList
-        movies={popularMoviesQuery.data?.pages.flat() ?? []}
-        title="Películas Populares"
-        loadNextPage={popularMoviesQuery.fetchNextPage}
-      />
+        {/* Peliculas populares */}
+        <MoviesHorizontalList
+          movies={popularMoviesQuery.data?.pages.flat() ?? []}
+          title="Películas Populares"
+          loadNextPage={popularMoviesQuery.fetchNextPage}
+        />
 
-      {/* Peliculas mejor calificadas */}
-      <MoviesHorizontalList
-        movies={topRatedMoviesQuery.data?.pages.flat() ?? []}
-        title="Películas Mejor Calificadas"
-        loadNextPage={topRatedMoviesQuery.fetchNextPage}
-      />
+        {/* Peliculas mejor calificadas */}
+        <MoviesHorizontalList
+          movies={topRatedMoviesQuery.data?.pages.flat() ?? []}
+          title="Películas Mejor Calificadas"
+          loadNextPage={topRatedMoviesQuery.fetchNextPage}
+        />
 
-      {/* Peliculas proximas a estrenarse */}
-      <MoviesHorizontalList
-        movies={upcomingMoviesQuery.data?.pages.flat() ?? []}
-        title="Proximas Películas"
-        loadNextPage={upcomingMoviesQuery.fetchNextPage}
-      />
+        {/* Peliculas proximas a estrenarse */}
+        <MoviesHorizontalList
+          movies={upcomingMoviesQuery.data?.pages.flat() ?? []}
+          title="Proximas Películas"
+          loadNextPage={upcomingMoviesQuery.fetchNextPage}
+        />
 
-      {/* Prueba para mostrar el JSON de respuesta */}
-      {/* <Text>{JSON.stringify(nowPlayingQuery.data, null, 2)}</Text> */}
-      
-    </View>
+        {/* Prueba para mostrar el JSON de respuesta */}
+        {/* <Text>{JSON.stringify(nowPlayingQuery.data, null, 2)}</Text> */}
+        
+      </View>
+    </ScrollView>
   );
 };
 
